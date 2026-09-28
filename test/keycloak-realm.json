@@ -1,0 +1,184 @@
+{
+  "realm": "smoke",
+  "enabled": true,
+  "sslRequired": "none",
+  "verifyEmail": false,
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "roles": {
+    "client": {
+      "unleash": [
+        {
+          "name": "unleash_admin"
+        },
+        {
+          "name": "unleash_editor"
+        },
+        {
+          "name": "unleash_viewer"
+        }
+      ]
+    }
+  },
+  "groups": [
+    {
+      "name": "unleash-admins",
+      "clientRoles": {
+        "unleash": [
+          "unleash_admin"
+        ]
+      }
+    },
+    {
+      "name": "unleash-editors",
+      "clientRoles": {
+        "unleash": [
+          "unleash_editor"
+        ]
+      }
+    },
+    {
+      "name": "unleash-viewers",
+      "clientRoles": {
+        "unleash": [
+          "unleash_viewer"
+        ]
+      }
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "unleash",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "smoke-secret",
+      "clientAuthenticatorType": "client-secret",
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "implicitFlowEnabled": false,
+      "redirectUris": [
+        "http://unleash:4242/api/auth/callback"
+      ],
+      "webOrigins": [
+        "http://unleash:4242"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      },
+      "protocolMappers": [
+        {
+          "name": "unleash client roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-client-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "usermodel.clientRoleMapping.clientId": "unleash",
+            "claim.name": "resource_access.${client_id}.roles",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "false"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "admin@example.com",
+      "email": "admin@example.com",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Admin",
+      "lastName": "Smoke",
+      "requiredActions": [],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "smoke-pass",
+          "temporary": false
+        }
+      ],
+      "groups": [
+        "/unleash-admins"
+      ]
+    },
+    {
+      "username": "editor@example.com",
+      "email": "editor@example.com",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Editor",
+      "lastName": "Smoke",
+      "requiredActions": [],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "smoke-pass",
+          "temporary": false
+        }
+      ],
+      "groups": [
+        "/unleash-editors"
+      ]
+    },
+    {
+      "username": "norole@example.com",
+      "email": "norole@example.com",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Norole",
+      "lastName": "Smoke",
+      "requiredActions": [],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "smoke-pass",
+          "temporary": false
+        }
+      ],
+      "groups": []
+    },
+    {
+      "username": "outsider@example.org",
+      "email": "outsider@example.org",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Outsider",
+      "lastName": "Smoke",
+      "requiredActions": [],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "smoke-pass",
+          "temporary": false
+        }
+      ],
+      "groups": [
+        "/unleash-admins"
+      ]
+    },
+    {
+      "username": "unverified@example.com",
+      "email": "unverified@example.com",
+      "emailVerified": false,
+      "enabled": true,
+      "firstName": "Unverified",
+      "lastName": "Smoke",
+      "requiredActions": [],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "smoke-pass",
+          "temporary": false
+        }
+      ],
+      "groups": [
+        "/unleash-admins"
+      ]
+    }
+  ]
+}
